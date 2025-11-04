@@ -1,0 +1,22 @@
+import discord
+
+# enable only what you need
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'Logged in as {client.user}')
+
+@client.event
+async def on_message(message):
+    print("message sent!")
+    print(message.content)
+    if message.author == client.user:
+        return
+    else:
+        await message.channel.send("It appears I can speak!")
+
+client.run("MTQzMDYyMDQyNzkxODc3NDMzNA.G11Dwa.xXiEm5DSqOZK_VVu1-dxwoIXOnnDrX3-SKCjV8")
