@@ -1,5 +1,6 @@
 import discord
-
+import random
+questions=["Will you be leaving the house tonight?","How was the bathroom?","Watched any good movies lately?","Can I borrow that mouse?"]
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 intents.message_content = True
@@ -9,9 +10,14 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    print("message sent!")
-    print (message.content)
-    if message.author == client.user:
+      if message.author == client.user:
         return
-    else:
-        await message.channel.send("It appears I can speak!")
+      else:  
+        chance=random.randint(7,10)
+        if chance==8:
+            question=random.randint(0,3)
+            print("question sent!")
+            await message.channel.send(questions[question])
+        print("message sent!")
+        print (message.content)
+  
