@@ -1,23 +1,29 @@
 import discord
 import random
-questions=["Will you be leaving the house tonight?","How was the bathroom?","Watched any good movies lately?","Can I borrow that mouse?"]
+questions=["Will you be leaving the house tonight?","How was the bathroom?","Watched any good movies lately?","Can I borrow that mouse?","Where do you live?","What's your social security number?"]
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 intents.message_content = True
+
+async def IT_Closet(message):
+      if message.author == client.user:
+        return
+      else:  
+        chance=random.randint(7,10)
+        if chance==8:
+            question=random.randint(0,5)
+            print("question sent!")
+            await message.channel.send(questions[question])
+        print("message sent!")
+        print (message.content)
+        if client.user.mentioned_in(message):
+           await message.channel.send("How dare ye ping me")
+
+
 @client.event
 async def on_ready():
     print(f'Logged in as {client.user}')
 
 @client.event
 async def on_message(message):
-      if message.author == client.user:
-        return
-      else:  
-        chance=random.randint(7,10)
-        if chance==8:
-            question=random.randint(0,3)
-            print("question sent!")
-            await message.channel.send(questions[question])
-        print("message sent!")
-        print (message.content)
-  
+ await IT_Closet(message)
