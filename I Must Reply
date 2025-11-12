@@ -1,0 +1,16 @@
+import discord
+import random
+
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
+intents.message_content = True
+
+async def IT_Closet(message):
+      if message.author == client.user:
+        return
+
+
+
+
+
+
