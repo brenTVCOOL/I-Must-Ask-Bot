@@ -1,6 +1,7 @@
 import discord
 import random
-questions=["Will you be leaving the house tonight?","How was the bathroom?","Watched any good movies lately?","Can I borrow that mouse?","Where do you live?","What's your social security number?"]
+import pandas
+questions=pandas.read_csv("C:\\Users\\dbsbr\\Downloads\\Replies and Asks - Sheet1 (1).csv")
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 intents.message_content = True
@@ -11,9 +12,11 @@ async def IT_Closet(message):
       else:  
         chance=random.randint(7,10)
         if chance==8:
-            question=random.randint(0,5)
+            question=random.randint(3,14)
+            send=questions.iat[question,0]
+            print(send)
             print("question sent!")
-            await message.channel.send(questions[question])
+            await message.channel.send(send)
         print("message sent!")
         print (message.content)
         if client.user.mentioned_in(message):
@@ -27,3 +30,18 @@ async def on_ready():
 @client.event
 async def on_message(message):
  await IT_Closet(message)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
