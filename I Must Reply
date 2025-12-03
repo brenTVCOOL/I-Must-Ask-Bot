@@ -12,13 +12,19 @@ async def IT_Closet(message):
 # create for loop to go through replies dataframe and check if any question matches message content 
       else:  
         for i in range(len(replies)):
+            print(len(replies))
             if message.content.lower() == replies.iat[i,0].lower():
-                await message.channel.send(replies.iat[i,1])
+                await message.channel.send(replies.iat[i,4])
                 print("reply sent!")
         print("message sent!")
         print (message.content)
         if client.user.mentioned_in(message):
            await message.channel.send("How dare ye ping me")
+
+
+@client.event
+async def on_message(message):
+ await IT_Closet(message)
 
 
 
