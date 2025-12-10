@@ -1,0 +1,17 @@
+import discord
+user_list=[]
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
+intents.message_content = True
+
+@client.event
+async def on_ready():
+    print(f'Logged in as {client.user}')
+# Check if the command is in a guild (server)
+    for guild in client.guilds:
+        for member in guild.members:
+            user_list.append(f"{member.name}#{member.discriminator} (ID: {member.id})")
+
+#807737442458140713
+
+    print (user_list)
