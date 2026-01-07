@@ -1,17 +1,46 @@
 import discord
+import random
 user_list=[]
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 intents.message_content = True
-
+food_pics=["C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-06 105642.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-06 105917.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134431.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134626.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134824.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134842.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134858.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134928.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 135110.png"]
+intents.members = True
 @client.event
 async def on_ready():
     print(f'Logged in as {client.user}')
 # Check if the command is in a guild (server)
     for guild in client.guilds:
-        for member in guild.members:
+        async for member in guild.fetch_members(limit=None):
             user_list.append(f"{member.name}#{member.discriminator} (ID: {member.id})")
 
-#807737442458140713
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+            return
+    else:  
+            chance=random.randint(7,10)
+            if chance==8:
+                photo=random.randint(0,len(food_pics)-1)
+                with open(food_pics[photo], "rb") as f:
+                    picture = discord.File(f)
+                print("question sent!")
+                await message.channel.send(file=picture)
+            print("message sent!")
+            print (message.content)
+            if client.user.mentioned_in(message):
+                await message.channel.send("How dare ye ping me")
 
     print (user_list)
+
+
+#finish bot add things for it to send messages and respond to commands
+ 
