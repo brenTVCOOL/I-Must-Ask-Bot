@@ -1,9 +1,13 @@
 import discord
 import random
+from discord.ext import commands
 user_list=[]
+pic=False
 intents = discord.Intents.default()
-client = discord.Client(intents=intents)
 intents.message_content = True
+client=commands.Bot(
+    command_prefix="!",intents=intents,
+     help_command=commands.DefaultHelpCommand(no_category='Commands'))
 food_pics=["C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-06 105642.png",
 "C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-06 105917.png",
 "C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134431.png",
@@ -12,7 +16,8 @@ food_pics=["C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-06 10564
 "C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134842.png",
 "C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134858.png",
 "C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 134928.png",
-"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 135110.png"]
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot 2026-01-07 135110.png",
+"C:\\Users\\dbsbr\\Pictures\\Screenshots\\Screenshot (1).png"]
 intents.members = True
 @client.event
 async def on_ready():
@@ -27,20 +32,46 @@ async def on_message(message):
     if message.author == client.user:
             return
     else:  
-            chance=random.randint(7,10)
-            if chance==8:
-                photo=random.randint(0,len(food_pics)-1)
-                with open(food_pics[photo], "rb") as f:
-                    picture = discord.File(f)
-                print("question sent!")
-                await message.channel.send(file=picture)
-            print("message sent!")
-            print (message.content)
-            if client.user.mentioned_in(message):
-                await message.channel.send("How dare ye ping me")
+            if pic==False:
+                chance=random.randint(7,10)
+                if chance==8:
+                    photo=random.randint(0,len(food_pics)-1)
+                    with open(food_pics[photo], "rb") as f:
+                        picture = discord.File(f)
+                    print("question sent!")
+                    await message.channel.send(file=picture)
+                print("message sent!")
+                print (message.content)
+                if client.user.mentioned_in(message):
+                    await message.channel.send("How dare ye ping me")
+@client.command()
+async def picoff(ctx):
+    pic=True
+    print("Settings changed")
 
-    print (user_list)
+@client.command()
+async def picon(ctx):
+    pic=False
+    print("Settings changed")
+print (user_list)
 
 
 #finish bot add things for it to send messages and respond to commands
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
