@@ -44,6 +44,7 @@ async def on_message(message):
                 print (message.content)
                 if client.user.mentioned_in(message):
                     await message.channel.send("How dare ye ping me")
+    await client.process_commands(message)
 @client.command()
 async def picoff(ctx):
     pic=True
@@ -57,21 +58,4 @@ print (user_list)
 
 
 #finish bot add things for it to send messages and respond to commands
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
