@@ -1,7 +1,16 @@
 import discord
 import random
 from discord.ext import commands
+import yt_dlp 
+import ffmpeg_downloader as ffmpeg
 user_list=[]
+YDL_OPTIONS = {
+    "format": "bestaudio",
+    "noplaylist": True,
+}
+FFMPEG_OPTIONS = {
+    "options": "-vn"
+}
 pic=False
 intents = discord.Intents.default()
 intents.message_content = True
@@ -57,5 +66,24 @@ async def picon(ctx):
 print (user_list)
 
 
+@client.command()
+async def play(ctx, url: str):
+    #join the user's voice channel
+    if ctx.author.voice is None:
+        await ctx.send("You are not connected to a voice channel.")
+        return
+    voice_channel = ctx.author.voice.channel
+    if ctx.voice_client is None:
+        vc = await voice_channel.connect()
+    else:
+        vc = ctx.voice_client
+    with yt_dlp.YoutubeDL(YDL_OPTIONS) as ydl:
+        info = ydl.extract_info(url, download=False)
+        audio_url = info["url"]
+
+    # Play audio
+    source = await discord.FFmpegOpusAudio.from_probe(audio_url, **FFMPEG_OPTIONS)
+    vc.play(source)
+
+    await ctx.send(f"▶️ Playing: **{info.get('title', 'Unknown')}**")
 #finish bot add things for it to send messages and respond to commands
- 
